@@ -33,7 +33,9 @@ NSString * const kSquashActionKey = @"_animator";
 {
 	if ((self = [super init]))
 	{
-		self.squashFactor = 3000;
+		self.squashFactor = 3000.f;
+		self.maxStretch = 2.f;
+		self.minSquash = .5f;
 		lastPosition = (CGPoint){NAN, NAN};
 		lastZPosition = NAN;
 		lastTransform = CATransform3DIdentity;
@@ -144,7 +146,9 @@ static inline void normalize(float *vec)
 	// apply a scale in the direction of travel and the directions perpindicular to travel
 	CATransform3D squashInverse = CATransform3DInvert(squash);
 	
-	float scale[3] = {MIN(1.f, self.squashFactor / magnitude), MIN(1.f, self.squashFactor / magnitude), MAX(1.f, magnitude / self.squashFactor)};
+	float scale[3] = {MAX(self.minSquash, MIN(1.f, self.squashFactor / magnitude)),
+					  MAX(self.minSquash, MIN(1.f, self.squashFactor / magnitude)),
+					  MIN(self.maxStretch, MAX(1.f, magnitude / self.squashFactor))};
 //	NSLog(@"scale %.2f %.2f %.2f", scale[0], scale[1], scale[2]);
 
 	CATransform3D scaleTransform = CATransform3DMakeScale(scale[0], scale[1], scale[2]);
