@@ -12,6 +12,8 @@ extern NSString * const kSquashActionKey;
 
 @interface SMSquashLayer : CALayer
 
+// The minimum velocity (in points per second) above which squashing and stretching will occur.
+// Default value is 3000, which works well on an iPad screen with the default .25s animation duration.
 @property (nonatomic, assign) float squashFactor;
 
 @end

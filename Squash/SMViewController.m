@@ -71,6 +71,7 @@
 - (void)tap:(UITapGestureRecognizer*)tap
 {
 	CGPoint location = [tap locationInView:self.view];
+
 	[UIView animateWithDuration:.5f animations:^{
 		view.center = location;
 	}];

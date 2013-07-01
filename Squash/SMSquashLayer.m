@@ -71,15 +71,6 @@ NSString * const kSquashActionKey = @"_animator";
 	}
 }
 
-- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
-{
-	lastZPosition = self.zPosition;
-	lastPosition = self.position;
-	lastFrameTime = 0;
-	self.transform = CATransform3DConcat(self.transform, CATransform3DInvert(lastTransform));
-	lastTransform = self.transform;
-}
-
 #pragma mark - Internal logic
 
 - (void)display
@@ -163,9 +154,8 @@ static inline void normalize(float *vec)
 	squash = CATransform3DConcat(squash, squashInverse);
 	
 	// apply the squash transform
-//	self.transform = CATransform3DConcat(self.transform, CATransform3DInvert(lastTransform));
-//	self.transform = CATransform3DConcat(self.transform, squash);
-	self.transform = squash;
+	self.transform = CATransform3DConcat(self.transform, CATransform3DInvert(lastTransform));
+	self.transform = CATransform3DConcat(self.transform, squash);
 	
 	// set new state for next frame
 	lastPosition = (CGPoint){x, y};
