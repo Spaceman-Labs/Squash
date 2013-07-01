@@ -21,6 +21,9 @@
 		6B58087A1780C72000891C12 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B58085C1780C72000891C12 /* UIKit.framework */; };
 		6B5808821780C72000891C12 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B5808801780C72000891C12 /* InfoPlist.strings */; };
 		6B5808841780C72000891C12 /* SquashTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5808831780C72000891C12 /* SquashTests.m */; };
+		6B58088F1780C74A00891C12 /* SMSquashLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B58088E1780C74A00891C12 /* SMSquashLayer.m */; };
+		6B5808921780C75A00891C12 /* SMSquashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5808911780C75A00891C12 /* SMSquashView.m */; };
+		6B5808941780D2EF00891C12 /* logo_periwinkle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B5808931780D2EF00891C12 /* logo_periwinkle.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,11 @@
 		6B58087F1780C72000891C12 /* SquashTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SquashTests-Info.plist"; sourceTree = "<group>"; };
 		6B5808811780C72000891C12 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6B5808831780C72000891C12 /* SquashTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SquashTests.m; sourceTree = "<group>"; };
+		6B58088D1780C74A00891C12 /* SMSquashLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSquashLayer.h; sourceTree = "<group>"; };
+		6B58088E1780C74A00891C12 /* SMSquashLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSquashLayer.m; sourceTree = "<group>"; };
+		6B5808901780C75A00891C12 /* SMSquashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSquashView.h; sourceTree = "<group>"; };
+		6B5808911780C75A00891C12 /* SMSquashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSquashView.m; sourceTree = "<group>"; };
+		6B5808931780D2EF00891C12 /* logo_periwinkle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_periwinkle.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +125,10 @@
 				6B58086A1780C72000891C12 /* Main.storyboard */,
 				6B58086D1780C72000891C12 /* SMViewController.h */,
 				6B58086E1780C72000891C12 /* SMViewController.m */,
+				6B58088D1780C74A00891C12 /* SMSquashLayer.h */,
+				6B58088E1780C74A00891C12 /* SMSquashLayer.m */,
+				6B5808901780C75A00891C12 /* SMSquashView.h */,
+				6B5808911780C75A00891C12 /* SMSquashView.m */,
 				6B5808701780C72000891C12 /* Images.xcassets */,
 				6B58085F1780C72000891C12 /* Supporting Files */,
 			);
@@ -126,6 +138,7 @@
 		6B58085F1780C72000891C12 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6B5808931780D2EF00891C12 /* logo_periwinkle.png */,
 				6B5808601780C72000891C12 /* Squash-Info.plist */,
 				6B5808611780C72000891C12 /* InfoPlist.strings */,
 				6B5808641780C72000891C12 /* main.m */,
@@ -229,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B5808941780D2EF00891C12 /* logo_periwinkle.png in Resources */,
 				6B5808711780C72000891C12 /* Images.xcassets in Resources */,
 				6B5808631780C72000891C12 /* InfoPlist.strings in Resources */,
 				6B58086C1780C72000891C12 /* Main.storyboard in Resources */,
@@ -250,9 +264,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B58088F1780C74A00891C12 /* SMSquashLayer.m in Sources */,
 				6B5808691780C72000891C12 /* SMAppDelegate.m in Sources */,
 				6B58086F1780C72000891C12 /* SMViewController.m in Sources */,
 				6B5808651780C72000891C12 /* main.m in Sources */,
+				6B5808921780C75A00891C12 /* SMSquashView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
