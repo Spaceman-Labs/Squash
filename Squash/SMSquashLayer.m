@@ -31,7 +31,7 @@
 {
 	if ((self = [super init]))
 	{
-		self.squashFactor = 2;
+		self.squashFactor = 3000;
 		lastPosition = (CGPoint){NAN, NAN};
 		lastZPosition = NAN;
 		lastTransform = CATransform3DIdentity;
@@ -150,8 +150,6 @@ static inline void normalize(float *vec)
 	
 	// apply a scale in the direction of travel and the directions perpindicular to travel
 	CATransform3D squashInverse = CATransform3DInvert(squash);
-	
-	magnitude /= 1500.f;
 	
 	float scale[3] = {MIN(1.f, self.squashFactor / magnitude), MIN(1.f, self.squashFactor / magnitude), MAX(1.f, magnitude / self.squashFactor)};
 //	float scale[3] = {self.squashFactor / magnitude, self.squashFactor / magnitude, magnitude / self.squashFactor};
