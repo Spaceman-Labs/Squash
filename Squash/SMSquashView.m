@@ -9,6 +9,11 @@
 #import "SMSquashView.h"
 #import "SMSquashLayer.h"
 
+@interface SMSquashView () {
+	CFTimeInterval positionDuration;
+}
+@end
+
 @implementation SMSquashView
 
 + (Class)layerClass
@@ -18,7 +23,22 @@
 
 - (id < CAAction >)actionForLayer:(CALayer *)layer forKey:(NSString *)key
 {
-	return [[self.layer class] defaultActionForKey:key];
+	id <CAAction> parent = [super actionForLayer:layer forKey:key];
+	if ([key isEqualToString:@"position"])
+	{
+		if ([(NSObject*)parent conformsToProtocol:@protocol(CAMediaTiming)])
+			positionDuration = ((id<CAMediaTiming>)parent).duration;
+		return parent;
+	}
+	else if ([key isEqualToString:kSquashActionKey])
+	{
+		id <CAAction> mine = [[self.layer class] defaultActionForKey:key];
+		if ([(NSObject*)mine conformsToProtocol:@protocol(CAMediaTiming)] && positionDuration)
+			((id<CAMediaTiming>)mine).duration = positionDuration;
+		positionDuration = 0;
+		return mine;
+	}
+	return parent;
 }
 
 @end
