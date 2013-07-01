@@ -72,7 +72,7 @@
 {
 	CGPoint location = [tap locationInView:self.view];
 
-	[UIView animateWithDuration:.5f animations:^{
+	[UIView animateWithDuration:1./3. animations:^{
 		view.center = location;
 	}];
 	

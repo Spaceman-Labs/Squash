@@ -46,7 +46,7 @@ NSString * const kSquashActionKey = @"_animator";
 - (void)setPosition:(CGPoint)position
 {
 	[super setPosition:position];
-	if (isnan(lastPosition.x))
+	if (isnan(lastPosition.x) || CGSizeEqualToSize(self.frame.size, CGSizeZero))
 	{
 		lastPosition = position;
 		lastZPosition = self.zPosition;
