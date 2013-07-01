@@ -11,16 +11,21 @@
 NSString * const kSquashActionKey = @"_animator";
 
 @interface SMSquashLayer() {
+	// we need to track a lot of stuff from the previous frame to calculate deltas
 	CFTimeInterval lastFrameTime;
 	CFTimeInterval lastTimeDelta;
 	CGPoint lastPosition;
 	float lastZPosition;
 	CATransform3D lastTransform;
+	
+	// for the running average when we're attempting to smooth our input
 	float average[3];
 }
 
+// the custom animator we'll use to get per-frame updates to our position
 @property (nonatomic, assign) float _animator;
 
+// all the work will happen here
 - (void)respondTo3dPosition:(float)x :(float)y :(float)z;
 
 @end
@@ -35,6 +40,7 @@ NSString * const kSquashActionKey = @"_animator";
 {
 	if ((self = [super init]))
 	{
+		// set reasonable defaults
 		self.squashFactor = 3000.f;
 		self.maxStretch = 1.5f;
 		self.minSquash = .5f;
@@ -51,11 +57,13 @@ NSString * const kSquashActionKey = @"_animator";
 - (void)setPosition:(CGPoint)position
 {
 	[super setPosition:position];
+	// if this is our first appearance or we don't have a size, save this as our "old" state
 	if (isnan(lastPosition.x) || CGSizeEqualToSize(self.frame.size, CGSizeZero))
 	{
 		lastPosition = position;
 		lastZPosition = self.zPosition;
 	}
+	// otherwise we're probably animating, so kick the custom animator
 	else
 	{
 		lastFrameTime = CACurrentMediaTime();
@@ -92,10 +100,12 @@ NSString * const kSquashActionKey = @"_animator";
 {
 	[CATransaction begin];
 	[CATransaction setDisableActions:YES];
+	// use the presentation layer's position, which has been correctly interpolated, to calculate our squash
 	CALayer *presentationLayer = (CALayer*)self.presentationLayer;
 	[self respondTo3dPosition:presentationLayer.position.x :presentationLayer.position.y :presentationLayer.zPosition];
 	[CATransaction commit];
 	
+	// set up a timer to clear out all our state when the animation ends
 	[SMSquashLayer cancelPreviousPerformRequestsWithTarget:self selector:@selector(animationEnded) object:nil];
 	[self performSelector:@selector(animationEnded) withObject:nil afterDelay:5./60.];
 }
@@ -119,8 +129,10 @@ static inline void normalize(float *vec)
 {
 	CFTimeInterval now = CACurrentMediaTime();
 	
+	// our movement since the last frame
 	float delta[3] = {x - lastPosition.x, y - lastPosition.y, z - lastZPosition};
 	
+	// if we're smoothing input, put that delta into the running average
 	if (self.smoothMotion)
 	{
 		float averageFactor = .9f;
@@ -133,9 +145,11 @@ static inline void normalize(float *vec)
 		delta[2] = average[2];
 	}
 	
+	// if we haven't actually moved, we have nothing to do here
 	if (delta[0] == 0 && delta[1] == 0 && delta[2] == 0)
 		return;
 	
+	// use the time the last frame took to get us to the current position
 	CFTimeInterval timeDelta = lastTimeDelta;
 	
 	// the current time can be somewhat variable, so let's snap to the nearest frame
@@ -153,6 +167,7 @@ static inline void normalize(float *vec)
 	
 	float magnitude = sqrtf(velocity[0] * velocity[0] + velocity[1] * velocity[1] + velocity[2] * velocity[2]);
 	NSLog(@"position delta %.2f\ttime delta %.4f\tmagnitude %.2f", delta[1], timeDelta, magnitude);
+	
 	// create a "look at" matrix to orient us along our direction of travel (code modified from gluLookAt)
 	normalize(velocity);
 	
@@ -188,15 +203,12 @@ static inline void normalize(float *vec)
 //	NSLog(@"scale %.2f %.2f %.2f", scale[0], scale[1], scale[2]);
 
 	CATransform3D scaleTransform = CATransform3DMakeScale(scale[0], scale[1], scale[2]);
-	
 	squash = CATransform3DConcat(squash, scaleTransform);
-	
 	squash = CATransform3DConcat(squash, squashInverse);
 	
 	// apply the squash transform
 	self.transform = CATransform3DConcat(self.transform, CATransform3DInvert(lastTransform));
 	self.transform = CATransform3DConcat(self.transform, squash);
-//	self.transform = squash;
 	
 	// set new state for next frame
 	lastPosition = (CGPoint){x, y};
@@ -208,6 +220,7 @@ static inline void normalize(float *vec)
 
 #pragma mark - Animation Methods
 
+// tell Core Animation that we need display called every frame while our custom animator is animating
 + (BOOL)needsDisplayForKey:(NSString *)key
 {
 	if ([key isEqualToString:kSquashActionKey])
@@ -215,6 +228,7 @@ static inline void normalize(float *vec)
 	return [super needsDisplayForKey:key];
 }
 
+// set up a basic animation for our custom animator
 + (id<CAAction>)defaultActionForKey:(NSString *)key
 {
 	if ([key isEqualToString:kSquashActionKey])

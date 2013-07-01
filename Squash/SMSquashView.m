@@ -24,9 +24,13 @@
 	return [SMSquashLayer class];
 }
 
+// by using our layer's delegate methods, we can get and set all the information we need
 - (id < CAAction >)actionForLayer:(CALayer *)layer forKey:(NSString *)key
 {
 	id <CAAction> parent = [super actionForLayer:layer forKey:key];
+	
+	// If the position is changing and it's animated, that means it was changed inside an animation block.
+	// We can take the duration of that animation and apply it to our custom animator's action.
 	if ([key isEqualToString:@"position"])
 	{
 		positionAnimates = YES;
@@ -36,6 +40,7 @@
 			positionAnimates = NO;
 		return parent;
 	}
+	// Here we apply the position animation's duration to the squash action, which we get from our layer.
 	else if ([key isEqualToString:kSquashActionKey])
 	{
 		id <CAAction> mine = [[self.layer class] defaultActionForKey:key];
