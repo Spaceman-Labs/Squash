@@ -12,7 +12,8 @@
 
 @interface SMViewController ()
 {
-	SMSquashLayer *view;
+	SMSquashLayer *layer;
+	SMSquashView *view;
 }
 @end
 
@@ -39,12 +40,16 @@
 	self.view.backgroundColor = [UIColor grayColor];
 	
 	CGSize viewSize = self.view.bounds.size;
-	view = [[SMSquashLayer alloc] init];
+//	layer = [[SMSquashLayer alloc] init];
+	view = [[SMSquashView alloc] init];
+	layer.frame = CGRectMake(viewSize.width/2 - 150, viewSize.height/2 - 150, 300, 300);
 	view.frame = CGRectMake(viewSize.width/2 - 150, viewSize.height/2 - 150, 300, 300);
-	[self.view.layer addSublayer:view];
+	[self.view.layer addSublayer:layer];
+	[self.view addSubview:view];
 	
 	UIImage *image = [UIImage imageNamed:@"logo_periwinkle"];
-	view.contents = (id)image.CGImage;
+	layer.contents = (id)image.CGImage;
+	view.layer.contents = (id)image.CGImage;
 	
 	UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
 	[self.view addGestureRecognizer:pan];
@@ -56,15 +61,19 @@
 - (void)pan:(UIPanGestureRecognizer*)pan
 {
 	CGPoint location = [pan locationInView:self.view];
-	view.position = location;
+	layer.position = location;
+	view.center = location;
 }
 
 - (void)tap:(UITapGestureRecognizer*)tap
 {
 	CGPoint location = [tap locationInView:self.view];
+	[UIView animateWithDuration:1.f animations:^{
+		view.center = location;
+	}];
 	[CATransaction begin];
 	[CATransaction setAnimationDuration:1./3.];
-	view.position = location;
+	layer.position = location;
 	[CATransaction commit];
 }
 
