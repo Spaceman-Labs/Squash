@@ -63,12 +63,14 @@
 	collision.translatesReferenceBoundsIntoBoundary = YES;
 	[animator addBehavior:collision];
 	UIGravityBehavior *gravity = [[UIGravityBehavior alloc] initWithItems:@[view]];
-//	[gravity setXComponent:0 yComponent:8];
 	[animator addBehavior:gravity];
 	
 	// tweak values to show off the squash
 	if (animator)
+	{
 		view.squashFactor = 750;
+		view.smoothMotion = YES;
+	}
 	
 	UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
 	[self.view addGestureRecognizer:pan];
@@ -102,7 +104,6 @@
 		if (snap)
 			[animator removeBehavior:snap];
 		snap = [[UISnapBehavior alloc] initWithItem:view snapToPoint:location];
-		snap.damping = 1;
 		[animator addBehavior:snap];
 	}
 	else

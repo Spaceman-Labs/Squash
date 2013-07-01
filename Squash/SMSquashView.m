@@ -17,7 +17,7 @@
 
 @implementation SMSquashView
 
-@dynamic squashFactor, maxStretch, minSquash;
+@dynamic squashFactor, maxStretch, minSquash, smoothMotion;
 
 + (Class)layerClass
 {
@@ -66,6 +66,11 @@
 	return ((SMSquashLayer*)self.layer).minSquash;
 }
 
+- (BOOL)smoothMotion
+{
+	return ((SMSquashLayer*)self.layer).smoothMotion;
+}
+
 - (void)setSquashFactor:(float)squashFactor
 {
 	((SMSquashLayer*)self.layer).squashFactor = squashFactor;
@@ -79,6 +84,11 @@
 - (void)setMinSquash:(float)minSquash
 {
 	((SMSquashLayer*)self.layer).minSquash = minSquash;
+}
+
+- (void)setSmoothMotion:(BOOL)smoothMotion
+{
+	((SMSquashLayer*)self.layer).smoothMotion = smoothMotion;
 }
 
 @end

@@ -16,6 +16,7 @@ NSString * const kSquashActionKey = @"_animator";
 	CGPoint lastPosition;
 	float lastZPosition;
 	CATransform3D lastTransform;
+	float average[3];
 }
 
 @property (nonatomic, assign) float _animator;
@@ -40,6 +41,7 @@ NSString * const kSquashActionKey = @"_animator";
 		lastPosition = (CGPoint){NAN, NAN};
 		lastZPosition = NAN;
 		lastTransform = CATransform3DIdentity;
+		self.smoothMotion = NO;
 	}
 	return self;
 }
@@ -53,11 +55,10 @@ NSString * const kSquashActionKey = @"_animator";
 	{
 		lastPosition = position;
 		lastZPosition = self.zPosition;
-		lastTimeDelta = 0;
-		lastFrameTime = CACurrentMediaTime();
 	}
 	else
 	{
+		lastFrameTime = CACurrentMediaTime();
 		self._animator = self._animator ? 0.f : 1.f;
 	}
 }
@@ -78,6 +79,15 @@ NSString * const kSquashActionKey = @"_animator";
 
 #pragma mark - Internal logic
 
+- (void)animationEnded
+{
+	lastPosition = self.position;
+	lastZPosition = self.zPosition;
+	average[0] = 0;
+	average[1] = 0;
+	average[2] = 0;
+}
+
 - (void)display
 {
 	[CATransaction begin];
@@ -85,6 +95,9 @@ NSString * const kSquashActionKey = @"_animator";
 	CALayer *presentationLayer = (CALayer*)self.presentationLayer;
 	[self respondTo3dPosition:presentationLayer.position.x :presentationLayer.position.y :presentationLayer.zPosition];
 	[CATransaction commit];
+	
+	[SMSquashLayer cancelPreviousPerformRequestsWithTarget:self selector:@selector(animationEnded) object:nil];
+	[self performSelector:@selector(animationEnded) withObject:nil afterDelay:5./60.];
 }
 
 static inline void cross(float *b, float *c, float *result)
@@ -107,6 +120,18 @@ static inline void normalize(float *vec)
 	CFTimeInterval now = CACurrentMediaTime();
 	
 	float delta[3] = {x - lastPosition.x, y - lastPosition.y, z - lastZPosition};
+	
+	if (self.smoothMotion)
+	{
+		float averageFactor = .9f;
+		average[0] = average[0] * averageFactor + delta[0] * (1.f - averageFactor);
+		average[1] = average[1] * averageFactor + delta[1] * (1.f - averageFactor);
+		average[2] = average[2] * averageFactor + delta[2] * (1.f - averageFactor);
+		
+		delta[0] = average[0];
+		delta[1] = average[1];
+		delta[2] = average[2];
+	}
 	
 	if (delta[0] == 0 && delta[1] == 0 && delta[2] == 0)
 		return;

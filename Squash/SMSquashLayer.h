@@ -20,8 +20,12 @@ extern NSString * const kSquashActionKey;
 // The upper and lower bounds for distortion. The layer will never scale more than maxStretch in the
 // direction of travel, and will never scale less than minSquash in the perpindicular directions.
 // 
-// maxStretch defaults to 2.0; minSquash defaults to 0.5.
+// maxStretch defaults to 1.5; minSquash defaults to 0.5.
 @property (nonatomic, assign) float maxStretch;
 @property (nonatomic, assign) float minSquash;
 
+// Smooths input motion with a moving average. May be useful when moving under UIDynamicWhatevers.
+//
+// Defaults to NO;
+@property (nonatomic, assign) BOOL smoothMotion;
 @end

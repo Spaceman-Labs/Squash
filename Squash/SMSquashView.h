@@ -22,4 +22,9 @@
 @property (nonatomic, assign) float maxStretch;
 @property (nonatomic, assign) float minSquash;
 
+// Smooths input motion with a moving average. May be useful when moving under UIDynamicWhatevers.
+//
+// Defaults to NO;
+@property (nonatomic, assign) BOOL smoothMotion;
+
 @end
