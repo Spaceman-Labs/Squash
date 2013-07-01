@@ -12,6 +12,7 @@ NSString * const kSquashActionKey = @"_animator";
 
 @interface SMSquashLayer() {
 	CFTimeInterval lastFrameTime;
+	CFTimeInterval lastTimeDelta;
 	CGPoint lastPosition;
 	float lastZPosition;
 	CATransform3D lastTransform;
@@ -34,7 +35,7 @@ NSString * const kSquashActionKey = @"_animator";
 	if ((self = [super init]))
 	{
 		self.squashFactor = 3000.f;
-		self.maxStretch = 2.f;
+		self.maxStretch = 1.5f;
 		self.minSquash = .5f;
 		lastPosition = (CGPoint){NAN, NAN};
 		lastZPosition = NAN;
@@ -52,6 +53,8 @@ NSString * const kSquashActionKey = @"_animator";
 	{
 		lastPosition = position;
 		lastZPosition = self.zPosition;
+		lastTimeDelta = 0;
+		lastFrameTime = CACurrentMediaTime();
 	}
 	else
 	{
@@ -101,22 +104,30 @@ static inline void normalize(float *vec)
 
 - (void)respondTo3dPosition:(float)x :(float)y :(float)z
 {
+	CFTimeInterval now = CACurrentMediaTime();
+	
 	float delta[3] = {x - lastPosition.x, y - lastPosition.y, z - lastZPosition};
 	
 	if (delta[0] == 0 && delta[1] == 0 && delta[2] == 0)
 		return;
 	
-	CFTimeInterval now = CACurrentMediaTime();
-	CFTimeInterval timeDelta = now - lastFrameTime;
+	CFTimeInterval timeDelta = lastTimeDelta;
+	
+	// the current time can be somewhat variable, so let's snap to the nearest frame
+	timeDelta *= 60.;
+	timeDelta = round(timeDelta);
+	timeDelta /= 60.;
 	
 	// if this is our first frame, let's take a guess as to the time step
 	if (timeDelta >= now)
+		timeDelta = 1./60.;
+	if (timeDelta == 0)
 		timeDelta = 1./60.;
 		
 	float velocity[3] = {delta[0] / timeDelta, delta[1] / timeDelta, delta[2] / timeDelta};
 	
 	float magnitude = sqrtf(velocity[0] * velocity[0] + velocity[1] * velocity[1] + velocity[2] * velocity[2]);
-	
+	NSLog(@"position delta %.2f\ttime delta %.4f\tmagnitude %.2f", delta[1], timeDelta, magnitude);
 	// create a "look at" matrix to orient us along our direction of travel (code modified from gluLookAt)
 	normalize(velocity);
 	
@@ -160,10 +171,12 @@ static inline void normalize(float *vec)
 	// apply the squash transform
 	self.transform = CATransform3DConcat(self.transform, CATransform3DInvert(lastTransform));
 	self.transform = CATransform3DConcat(self.transform, squash);
+//	self.transform = squash;
 	
 	// set new state for next frame
 	lastPosition = (CGPoint){x, y};
 	lastZPosition = z;
+	lastTimeDelta = now - lastFrameTime;
 	lastFrameTime = now;
 	lastTransform = squash;
 }
