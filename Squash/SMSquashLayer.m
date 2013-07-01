@@ -8,6 +8,8 @@
 
 #import "SMSquashLayer.h"
 
+NSString * const kSquashActionKey = @"_animator";
+
 @interface SMSquashLayer() {
 	CFTimeInterval lastFrameTime;
 	CGPoint lastPosition;
@@ -152,7 +154,7 @@ static inline void normalize(float *vec)
 	CATransform3D squashInverse = CATransform3DInvert(squash);
 	
 	float scale[3] = {MIN(1.f, self.squashFactor / magnitude), MIN(1.f, self.squashFactor / magnitude), MAX(1.f, magnitude / self.squashFactor)};
-//	float scale[3] = {self.squashFactor / magnitude, self.squashFactor / magnitude, magnitude / self.squashFactor};
+//	NSLog(@"scale %.2f %.2f %.2f", scale[0], scale[1], scale[2]);
 
 	CATransform3D scaleTransform = CATransform3DMakeScale(scale[0], scale[1], scale[2]);
 	
@@ -176,14 +178,14 @@ static inline void normalize(float *vec)
 
 + (BOOL)needsDisplayForKey:(NSString *)key
 {
-	if ([key isEqualToString:@"_animator"])
+	if ([key isEqualToString:kSquashActionKey])
 		return YES;
 	return [super needsDisplayForKey:key];
 }
 
 + (id<CAAction>)defaultActionForKey:(NSString *)key
 {
-	if ([key isEqualToString:@"_animator"])
+	if ([key isEqualToString:kSquashActionKey])
 	{
 		CABasicAnimation *animation = [CABasicAnimation animation];
 		return animation;

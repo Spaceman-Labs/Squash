@@ -8,6 +8,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+extern NSString * const kSquashActionKey;
+
 @interface SMSquashLayer : CALayer
 
 @property (nonatomic, assign) float squashFactor;
