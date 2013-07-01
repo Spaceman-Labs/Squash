@@ -17,6 +17,38 @@
 
 @implementation SMSquashView
 
+@dynamic squashFactor, maxStretch, minSquash;
+
+- (float)squashFactor
+{
+	return ((SMSquashLayer*)self.layer).squashFactor;
+}
+
+- (float)maxStretch
+{
+	return ((SMSquashLayer*)self.layer).maxStretch;
+}
+
+- (float)minSquash
+{
+	return ((SMSquashLayer*)self.layer).minSquash;
+}
+
+- (void)setSquashFactor:(float)squashFactor
+{
+	((SMSquashLayer*)self.layer).squashFactor = squashFactor;
+}
+
+- (void)setMaxStretch:(float)maxStretch
+{
+	((SMSquashLayer*)self.layer).maxStretch = maxStretch;
+}
+
+- (void)setMinSquash:(float)minSquash
+{
+	((SMSquashLayer*)self.layer).minSquash = minSquash;
+}
+
 + (Class)layerClass
 {
 	return [SMSquashLayer class];
