@@ -11,6 +11,7 @@
 
 @interface SMSquashView () {
 	CFTimeInterval positionDuration;
+	BOOL positionAnimates;
 }
 @end
 
@@ -26,8 +27,11 @@
 	id <CAAction> parent = [super actionForLayer:layer forKey:key];
 	if ([key isEqualToString:@"position"])
 	{
+		positionAnimates = YES;
 		if ([(NSObject*)parent conformsToProtocol:@protocol(CAMediaTiming)])
 			positionDuration = ((id<CAMediaTiming>)parent).duration;
+		else
+			positionAnimates = NO;
 		return parent;
 	}
 	else if ([key isEqualToString:kSquashActionKey])
@@ -36,7 +40,9 @@
 		if ([(NSObject*)mine conformsToProtocol:@protocol(CAMediaTiming)] && positionDuration)
 			((id<CAMediaTiming>)mine).duration = positionDuration;
 		positionDuration = 0;
-		return mine;
+		if (positionAnimates)
+			return mine;
+		return parent;
 	}
 	return parent;
 }

@@ -40,10 +40,13 @@
 	self.view.backgroundColor = [UIColor grayColor];
 	
 	CGSize viewSize = self.view.bounds.size;
+
 //	layer = [[SMSquashLayer alloc] init];
 	view = [[SMSquashView alloc] init];
+	
 	layer.frame = CGRectMake(viewSize.width/2 - 150, viewSize.height/2 - 150, 300, 300);
 	view.frame = CGRectMake(viewSize.width/2 - 150, viewSize.height/2 - 150, 300, 300);
+
 	[self.view.layer addSublayer:layer];
 	[self.view addSubview:view];
 	
@@ -68,9 +71,10 @@
 - (void)tap:(UITapGestureRecognizer*)tap
 {
 	CGPoint location = [tap locationInView:self.view];
-	[UIView animateWithDuration:1.f animations:^{
+	[UIView animateWithDuration:.5f animations:^{
 		view.center = location;
 	}];
+	
 	[CATransaction begin];
 	[CATransaction setAnimationDuration:1./3.];
 	layer.position = location;
