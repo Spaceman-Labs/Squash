@@ -14,6 +14,9 @@
 {
 	SMSquashLayer *layer;
 	SMSquashView *view;
+	
+	UIDynamicAnimator *animator;
+	UISnapBehavior *snap;
 }
 @end
 
@@ -54,6 +57,15 @@
 	layer.contents = (id)image.CGImage;
 	view.layer.contents = (id)image.CGImage;
 	
+	// dynamics
+	animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+	UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:@[view]];
+	collision.translatesReferenceBoundsIntoBoundary = YES;
+	[animator addBehavior:collision];
+	UIGravityBehavior *gravity = [[UIGravityBehavior alloc] initWithItems:@[view]];
+	[gravity setXComponent:0 yComponent:8];
+	[animator addBehavior:gravity];
+	
 	UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
 	[self.view addGestureRecognizer:pan];
 	
@@ -64,22 +76,40 @@
 - (void)pan:(UIPanGestureRecognizer*)pan
 {
 	CGPoint location = [pan locationInView:self.view];
-	layer.position = location;
-	view.center = location;
+	if (animator)
+	{
+		if (snap)
+			[animator removeBehavior:snap];
+	}
+	else
+	{
+		layer.position = location;
+		view.center = location;
+	}
 }
 
 - (void)tap:(UITapGestureRecognizer*)tap
 {
 	CGPoint location = [tap locationInView:self.view];
-
-	[UIView animateWithDuration:1./3. animations:^{
-		view.center = location;
-	}];
 	
-	[CATransaction begin];
-	[CATransaction setAnimationDuration:1./3.];
-	layer.position = location;
-	[CATransaction commit];
+	if (animator)
+	{
+		if (snap)
+			[animator removeBehavior:snap];
+		snap = [[UISnapBehavior alloc] initWithItem:view snapToPoint:location];
+		[animator addBehavior:snap];
+	}
+	else
+	{
+		[UIView animateWithDuration:1./3. animations:^{
+			view.center = location;
+		}];
+		
+		[CATransaction begin];
+		[CATransaction setAnimationDuration:1./3.];
+		layer.position = location;
+		[CATransaction commit];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
