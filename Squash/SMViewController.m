@@ -1,8 +1,8 @@
 //
-//  ViewController.m
-//  fiatlux
+//  SMViewController.m
+//  Squash
 //
-//  Created by Joel Kraut on 3/14/12.
+//  Created by Joel Kraut on 6/30/13.
 //  Copyright (c) 2012 Spaceman Labs. All rights reserved.
 //
 
