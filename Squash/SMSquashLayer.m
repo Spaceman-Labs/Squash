@@ -193,7 +193,7 @@ static inline void normalize(float *vec)
 	squash.m33 = -velocity[2];
 	squash.m43 = 0;
 	
-	// apply a scale in the direction of travel and the directions perpindicular to travel
+	// apply a scale in the direction of travel and the directions perpendicular to travel
 	CATransform3D squashInverse = CATransform3DInvert(squash);
 	
 	float scale[3] = {MAX(self.minSquash, MIN(1.f, self.squashFactor / magnitude)),
