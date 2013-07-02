@@ -18,7 +18,7 @@ extern NSString * const kSquashActionKey;
 @property (nonatomic, assign) float squashFactor;
 
 // The upper and lower bounds for distortion. The layer will never scale more than maxStretch in the
-// direction of travel, and will never scale less than minSquash in the perpindicular directions.
+// direction of travel, and will never scale less than minSquash in the perpendicular directions.
 // 
 // maxStretch defaults to 1.5; minSquash defaults to 0.5.
 @property (nonatomic, assign) float maxStretch;
