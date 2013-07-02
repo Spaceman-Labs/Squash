@@ -10,6 +10,26 @@
 #import "SMSquashView.h"
 #import "SMSquashLayer.h"
 
+// If none of these defines are enabled, a tap will cause a basic
+// animation from the view's current position to the tap location.
+// A pan gesture will drag the view.
+//
+// Probably at most one of these defines should be enabled.
+
+// If USE_DYNAMICS is defined, a tap will snap the view to that point.
+// A pan will remove the snap and allow gravity to take its course.
+//#define USE_DYNAMICS
+
+// if USE_SPRING_ANIMATION is defined, the view will animate to the tap
+// position with springiness.
+#define USE_SPRING_ANIMATION
+
+// if USE_CALAYER is defined, an SMSquashLayer will be used, rather than
+// an SMSquashView. Because dynamics and spring-style animations both
+// require UIViews, interaction will be the same as if no defines were
+// enabled, but with a layer rather than a view.
+//#define USE_CALAYER
+
 @interface SMViewController ()
 {
 	SMSquashLayer *layer;
@@ -44,20 +64,22 @@
 	
 	CGSize viewSize = self.view.bounds.size;
 
-//	layer = [[SMSquashLayer alloc] init];
-	view = [[SMSquashView alloc] init];
-	
-	layer.frame = CGRectMake(viewSize.width/2 - 150, viewSize.height/2 - 150, 300, 300);
-	view.frame = CGRectMake(viewSize.width/2 - 150, viewSize.height/2 - 150, 300, 300);
-
-	[self.view.layer addSublayer:layer];
-	[self.view addSubview:view];
-	
 	UIImage *image = [UIImage imageNamed:@"logo_periwinkle"];
+	
+#ifdef USE_CALAYER
+	layer = [[SMSquashLayer alloc] init];
+	layer.frame = CGRectMake(viewSize.width/2 - 150, viewSize.height/2 - 150, 300, 300);
+	[self.view.layer addSublayer:layer];
 	layer.contents = (id)image.CGImage;
+#else
+	view = [[SMSquashView alloc] init];
+	view.frame = CGRectMake(viewSize.width/2 - 150, viewSize.height/2 - 150, 300, 300);
+	[self.view addSubview:view];
 	view.layer.contents = (id)image.CGImage;
+#endif
 	
 	// dynamics
+#if defined(USE_DYNAMICS) && !defined(USE_CALAYER)
 	animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 	UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:@[view]];
 	collision.translatesReferenceBoundsIntoBoundary = YES;
@@ -66,11 +88,9 @@
 	[animator addBehavior:gravity];
 	
 	// tweak values to show off the squash
-	if (animator)
-	{
-		view.squashFactor = 750;
-		view.smoothMotion = YES;
-	}
+	view.squashFactor = 750;
+	view.smoothMotion = YES;
+#endif
 	
 	UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
 	[self.view addGestureRecognizer:pan];
@@ -81,42 +101,41 @@
 
 - (void)pan:(UIPanGestureRecognizer*)pan
 {
+#ifdef USE_DYNAMICS
+	if (snap)
+		[animator removeBehavior:snap];
+	snap = nil;
+#else
 	CGPoint location = [pan locationInView:self.view];
-	if (animator)
-	{
-		if (snap)
-			[animator removeBehavior:snap];
-		snap = nil;
-	}
-	else
-	{
-		layer.position = location;
-		view.center = location;
-	}
+	layer.position = location;
+	view.center = location;
+#endif
 }
 
 - (void)tap:(UITapGestureRecognizer*)tap
 {
 	CGPoint location = [tap locationInView:self.view];
-	
-	if (animator)
-	{
-		if (snap)
-			[animator removeBehavior:snap];
-		snap = [[UISnapBehavior alloc] initWithItem:view snapToPoint:location];
-		[animator addBehavior:snap];
-	}
-	else
-	{
-		[UIView animateWithDuration:1./3. animations:^{
-			view.center = location;
-		}];
-		
-		[CATransaction begin];
-		[CATransaction setAnimationDuration:1./3.];
-		layer.position = location;
-		[CATransaction commit];
-	}
+#ifndef USE_CALAYER
+#ifdef USE_DYNAMICS
+	if (snap)
+		[animator removeBehavior:snap];
+	snap = [[UISnapBehavior alloc] initWithItem:view snapToPoint:location];
+	[animator addBehavior:snap];
+#elif defined(USE_SPRING_ANIMATION)
+	[UIView animateWithDuration:1./3. delay:0 usingSpringWithDamping:.5f initialSpringVelocity:20.f options:0 animations:^{
+		view.center = location;
+	} completion:nil];
+#else
+	[UIView animateWithDuration:1./3. animations:^{
+		view.center = location;
+	}];
+#endif
+#else
+	[CATransaction begin];
+	[CATransaction setAnimationDuration:1./3.];
+	layer.position = location;
+	[CATransaction commit];
+#endif
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
