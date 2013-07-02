@@ -14,7 +14,6 @@
 		6B5808651780C72000891C12 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5808641780C72000891C12 /* main.m */; };
 		6B5808691780C72000891C12 /* SMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5808681780C72000891C12 /* SMAppDelegate.m */; };
 		6B58086F1780C72000891C12 /* SMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B58086E1780C72000891C12 /* SMViewController.m */; };
-		6B5808711780C72000891C12 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B5808701780C72000891C12 /* Images.xcassets */; };
 		6B5808781780C72000891C12 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B5808771780C72000891C12 /* XCTest.framework */; };
 		6B5808791780C72000891C12 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B5808581780C72000891C12 /* Foundation.framework */; };
 		6B58087A1780C72000891C12 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B58085C1780C72000891C12 /* UIKit.framework */; };
@@ -50,7 +49,6 @@
 		6B5808681780C72000891C12 /* SMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMAppDelegate.m; sourceTree = "<group>"; };
 		6B58086D1780C72000891C12 /* SMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMViewController.h; sourceTree = "<group>"; };
 		6B58086E1780C72000891C12 /* SMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMViewController.m; sourceTree = "<group>"; };
-		6B5808701780C72000891C12 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6B5808761780C72000891C12 /* SquashTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SquashTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B5808771780C72000891C12 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6B58087F1780C72000891C12 /* SquashTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SquashTests-Info.plist"; sourceTree = "<group>"; };
@@ -133,7 +131,6 @@
 				6B58088E1780C74A00891C12 /* SMSquashLayer.m */,
 				6B5808901780C75A00891C12 /* SMSquashView.h */,
 				6B5808911780C75A00891C12 /* SMSquashView.m */,
-				6B5808701780C72000891C12 /* Images.xcassets */,
 				6B58085F1780C72000891C12 /* Supporting Files */,
 			);
 			path = Squash;
@@ -247,7 +244,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B5808941780D2EF00891C12 /* logo_periwinkle.png in Resources */,
-				6B5808711780C72000891C12 /* Images.xcassets in Resources */,
 				6B5808631780C72000891C12 /* InfoPlist.strings in Resources */,
 				6BEE8F2B1782873E0095ACB9 /* SMViewController.xib in Resources */,
 			);
