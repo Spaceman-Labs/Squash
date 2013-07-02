@@ -166,7 +166,6 @@ static inline void normalize(float *vec)
 	float velocity[3] = {delta[0] / timeDelta, delta[1] / timeDelta, delta[2] / timeDelta};
 	
 	float magnitude = sqrtf(velocity[0] * velocity[0] + velocity[1] * velocity[1] + velocity[2] * velocity[2]);
-	NSLog(@"position delta %.2f\ttime delta %.4f\tmagnitude %.2f", delta[1], timeDelta, magnitude);
 	
 	// create a "look at" matrix to orient us along our direction of travel (code modified from gluLookAt)
 	normalize(velocity);
@@ -200,7 +199,6 @@ static inline void normalize(float *vec)
 	float scale[3] = {MAX(self.minSquash, MIN(1.f, self.squashFactor / magnitude)),
 					  MAX(self.minSquash, MIN(1.f, self.squashFactor / magnitude)),
 					  MIN(self.maxStretch, MAX(1.f, magnitude / self.squashFactor))};
-//	NSLog(@"scale %.2f %.2f %.2f", scale[0], scale[1], scale[2]);
 
 	CATransform3D scaleTransform = CATransform3DMakeScale(scale[0], scale[1], scale[2]);
 	squash = CATransform3DConcat(squash, scaleTransform);

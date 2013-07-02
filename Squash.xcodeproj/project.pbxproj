@@ -13,7 +13,6 @@
 		6B5808631780C72000891C12 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B5808611780C72000891C12 /* InfoPlist.strings */; };
 		6B5808651780C72000891C12 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5808641780C72000891C12 /* main.m */; };
 		6B5808691780C72000891C12 /* SMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5808681780C72000891C12 /* SMAppDelegate.m */; };
-		6B58086C1780C72000891C12 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B58086A1780C72000891C12 /* Main.storyboard */; };
 		6B58086F1780C72000891C12 /* SMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B58086E1780C72000891C12 /* SMViewController.m */; };
 		6B5808711780C72000891C12 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B5808701780C72000891C12 /* Images.xcassets */; };
 		6B5808781780C72000891C12 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B5808771780C72000891C12 /* XCTest.framework */; };
@@ -24,6 +23,8 @@
 		6B58088F1780C74A00891C12 /* SMSquashLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B58088E1780C74A00891C12 /* SMSquashLayer.m */; };
 		6B5808921780C75A00891C12 /* SMSquashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5808911780C75A00891C12 /* SMSquashView.m */; };
 		6B5808941780D2EF00891C12 /* logo_periwinkle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B5808931780D2EF00891C12 /* logo_periwinkle.png */; };
+		6BEE8F29178286CB0095ACB9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BEE8F28178286CB0095ACB9 /* QuartzCore.framework */; };
+		6BEE8F2B1782873E0095ACB9 /* SMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6BEE8F2A1782873E0095ACB9 /* SMViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +48,6 @@
 		6B5808661780C72000891C12 /* Squash-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Squash-Prefix.pch"; sourceTree = "<group>"; };
 		6B5808671780C72000891C12 /* SMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMAppDelegate.h; sourceTree = "<group>"; };
 		6B5808681780C72000891C12 /* SMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMAppDelegate.m; sourceTree = "<group>"; };
-		6B58086B1780C72000891C12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6B58086D1780C72000891C12 /* SMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMViewController.h; sourceTree = "<group>"; };
 		6B58086E1780C72000891C12 /* SMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMViewController.m; sourceTree = "<group>"; };
 		6B5808701780C72000891C12 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -61,6 +61,8 @@
 		6B5808901780C75A00891C12 /* SMSquashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSquashView.h; sourceTree = "<group>"; };
 		6B5808911780C75A00891C12 /* SMSquashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSquashView.m; sourceTree = "<group>"; };
 		6B5808931780D2EF00891C12 /* logo_periwinkle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_periwinkle.png; sourceTree = "<group>"; };
+		6BEE8F28178286CB0095ACB9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6BEE8F2A1782873E0095ACB9 /* SMViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BEE8F29178286CB0095ACB9 /* QuartzCore.framework in Frameworks */,
 				6B58085B1780C72000891C12 /* CoreGraphics.framework in Frameworks */,
 				6B58085D1780C72000891C12 /* UIKit.framework in Frameworks */,
 				6B5808591780C72000891C12 /* Foundation.framework in Frameworks */,
@@ -109,6 +112,7 @@
 		6B5808571780C72000891C12 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6BEE8F28178286CB0095ACB9 /* QuartzCore.framework */,
 				6B5808581780C72000891C12 /* Foundation.framework */,
 				6B58085A1780C72000891C12 /* CoreGraphics.framework */,
 				6B58085C1780C72000891C12 /* UIKit.framework */,
@@ -122,9 +126,9 @@
 			children = (
 				6B5808671780C72000891C12 /* SMAppDelegate.h */,
 				6B5808681780C72000891C12 /* SMAppDelegate.m */,
-				6B58086A1780C72000891C12 /* Main.storyboard */,
 				6B58086D1780C72000891C12 /* SMViewController.h */,
 				6B58086E1780C72000891C12 /* SMViewController.m */,
+				6BEE8F2A1782873E0095ACB9 /* SMViewController.xib */,
 				6B58088D1780C74A00891C12 /* SMSquashLayer.h */,
 				6B58088E1780C74A00891C12 /* SMSquashLayer.m */,
 				6B5808901780C75A00891C12 /* SMSquashView.h */,
@@ -245,7 +249,7 @@
 				6B5808941780D2EF00891C12 /* logo_periwinkle.png in Resources */,
 				6B5808711780C72000891C12 /* Images.xcassets in Resources */,
 				6B5808631780C72000891C12 /* InfoPlist.strings in Resources */,
-				6B58086C1780C72000891C12 /* Main.storyboard in Resources */,
+				6BEE8F2B1782873E0095ACB9 /* SMViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,14 +303,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		6B58086A1780C72000891C12 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6B58086B1780C72000891C12 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		6B5808801780C72000891C12 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -349,7 +345,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -381,7 +377,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -396,6 +392,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Squash/Squash-Prefix.pch";
 				INFOPLIST_FILE = "Squash/Squash-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -409,6 +406,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Squash/Squash-Prefix.pch";
 				INFOPLIST_FILE = "Squash/Squash-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -473,6 +471,7 @@
 				6B5808891780C72000891C12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B58088A1780C72000891C12 /* Build configuration list for PBXNativeTarget "SquashTests" */ = {
 			isa = XCConfigurationList;
@@ -481,6 +480,7 @@
 				6B58088C1780C72000891C12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

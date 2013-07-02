@@ -7,12 +7,17 @@
 //
 
 #import "SMAppDelegate.h"
+#import "SMViewController.h"
 
 @implementation SMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    // Override point for customization after application launch.
+	self.window.rootViewController = [[SMViewController alloc] initWithNibName:nil bundle:nil];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 							
