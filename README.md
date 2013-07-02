@@ -15,6 +15,7 @@ Seriously, just drop it in. It supports all the customization you could want:
 * `maxStretch` puts a ceiling on the amount of stretching an object can do
 * `minSquash` puts a floor on it
 * `smoothMotion` will run a moving average filter to smooth out motion jaggies
+
 …but these are all set to very reasonable values. You may not need to change them.
 
 ## What's It Look Like
